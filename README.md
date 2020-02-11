@@ -1,1 +1,1 @@
-# designuj.github.io
+# designuj.pl → designuj.github.io 
