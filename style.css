@@ -70,54 +70,6 @@ img {
     filter: none;
 }
 
-a {
-    text-decoration: none;
-}
-
-p {
-    font-size: 16px;
-    font-weight: normal;
-}
-
-p a {
-    color: #D44500;
-}
-
-p a:hover {
-    text-decoration: underline;
-}
-
-ul {
-    display: flex;
-}
-
-ul a {
-    color: darkgray;
-}
-
-ul a:hover {
-    color: black;
-}
-
-.subtitle {
-    font-size: 18px;
-    color: #D44500;
-}
-
-h2 {
-    font-size: 36px;
-}
-
-h4 {
-    font-size: 24px;
-    color: #D44500;
-}
-
-h6 {
-    font-size: 18px;
-    font-weight: normal;
-}
-
 .wrapper {
     display: flex;
     flex-direction: column;

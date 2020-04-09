@@ -1,22 +1,6 @@
 'use strict';
 
-/** Generate a terminal widget. */
 class Terminal {
-    /**
-     * Construct the widget's settings.
-     * @param {(string|Node)=} container - Query selector or container element.
-     * @param {Object=} options - Custom settings.
-     * @param {string} options.prefix - Prefix to use for data attributes.
-     * @param {number} options.startDelay - Delay before animation, in ms.
-     * @param {number} options.typeDelay - Delay between each typed character, in ms.
-     * @param {number} options.lineDelay - Delay between each line, in ms.
-     * @param {number} options.progressLength - Number of characters displayed as progress bar.
-     * @param {string} options.progressChar – Character to use for progress bar, defaults to █.
-	 * @param {number} options.progressPercent - Max percent of progress.
-     * @param {string} options.cursor – Character to use for cursor, defaults to ▋.
-     * @param {Object[]} lineData - Dynamically loaded line data objects.
-     * @param {boolean} options.noInit - Don't initialise the animation.
-     */
     constructor(container = '#terminal', options = {}) {
         this.container = (typeof container === 'string') ? document.querySelector(container) : container;
         this.pfx = `data-${options.prefix || 'ty'}`;
@@ -38,17 +22,8 @@ class Terminal {
         if (!options.noInit) this.init()
     }
 
-    /**
-     * Initialise the widget, get lines, clear container and start animation.
-     */
     init() {
-        // Appends dynamically loaded lines to existing line elements.
         this.lines = [...this.container.querySelectorAll(`[${this.pfx}]`)].concat(this.lineData);
-
-        /** 
-         * Calculates width and height of Terminal container.
-         * If container is empty and lines are dynamically loaded, defaults to browser `auto` or CSS.
-         */ 
         const containerStyle = getComputedStyle(this.container);
         this.container.style.width = containerStyle.width !== '0px' ? 
             containerStyle.width : undefined;
@@ -60,9 +35,6 @@ class Terminal {
         this.start();
     }
 
-    /**
-     * Start the animation and rener the lines depending on their data attributes.
-     */
     async start() {
         await this._wait(this.startDelay);
 
@@ -90,10 +62,6 @@ class Terminal {
         }
     }
 
-    /**
-     * Animate a typed line.
-     * @param {Node} line - The line element to render.
-     */
     async type(line) {
         const chars = [...line.textContent];
         const delay = line.getAttribute(`${this.pfx}-typeDelay`) || this.typeDelay;
@@ -106,10 +74,6 @@ class Terminal {
         }
     }
 
-    /**
-     * Animate a progress bar.
-     * @param {Node} line - The line element to render.
-     */
     async progress(line) {
         const progressLength = line.getAttribute(`${this.pfx}-progressLength`)
             || this.progressLength;
@@ -131,21 +95,10 @@ class Terminal {
         }
     }
 
-    /**
-     * Helper function for animation delays, called with `await`.
-     * @param {number} time - Timeout, in ms.
-     */
     _wait(time) {
         return new Promise(resolve => setTimeout(resolve, time));
     }
 
-    /**
-     * Converts line data objects into line elements.
-     * 
-     * @param {Object[]} lineData - Dynamically loaded lines.
-     * @param {Object} line - Line data object.
-     * @returns {Element[]} - Array of line elements.
-     */
     lineDataToElements(lineData) {
         return lineData.map(line => {
             let div = document.createElement('div');
@@ -155,12 +108,6 @@ class Terminal {
         });
     }
 
-    /**
-     * Helper function for generating attributes string.
-     * 
-     * @param {Object} line - Line data object.
-     * @returns {string} - String of attributes.
-     */
     _attributes(line) {
         let attrs = '';
         for (let prop in line) {
@@ -177,9 +124,6 @@ class Terminal {
     }
 }
 
-/**
-* HTML API: If current script has container(s) specified, initialise Terminal.
-*/
 if (document.currentScript.hasAttribute('data-terminal-container')) {
     const containers = document.currentScript.getAttribute('data-terminal-container');
     containers.split('|')
