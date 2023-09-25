@@ -19,15 +19,15 @@ class Terminal {
         this.cursor = options.cursor
             || this.container.getAttribute(`${this.pfx}-cursor`) || '▋';
         this.lineData = this.lineDataToElements(options.lineData || []);
-        if (!options.noInit) this.init()
+        this.init();
     }
 
     init() {
         this.lines = [...this.container.querySelectorAll(`[${this.pfx}]`)].concat(this.lineData);
         const containerStyle = getComputedStyle(this.container);
-        this.container.style.width = containerStyle.width !== '0px' ? 
+        this.container.style.width = containerStyle.width !== '0px' ?
             containerStyle.width : undefined;
-        this.container.style.minHeight = containerStyle.height !== '0px' ? 
+        this.container.style.minHeight = containerStyle.height !== '0px' ?
             containerStyle.height : undefined;
 
         this.container.setAttribute('data-terminal', '');
@@ -42,13 +42,13 @@ class Terminal {
             const type = line.getAttribute(this.pfx);
             const delay = line.getAttribute(`${this.pfx}-delay`) || this.lineDelay;
 
-            if (type == 'input') {
+            if (type === 'input') {
                 line.setAttribute(`${this.pfx}-cursor`, this.cursor);
                 await this.type(line);
                 await this._wait(delay);
             }
 
-            else if (type == 'progress') {
+            else if (type === 'progress') {
                 await this.progress(line);
                 await this._wait(delay);
             }

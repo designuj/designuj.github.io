@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Lato|Raleway|Roboto+Mono|Fira+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Raleway|Fira+Mono&display=swap');
 * {
     margin: 0;
     padding: 0;
@@ -119,7 +119,7 @@ img {
 }
 
 [data-terminal]:after {
-    content: 'bash';
+    content: 'terminal';
     position: absolute;
     color: var(--color-text-subtle);
     top: 5px;
